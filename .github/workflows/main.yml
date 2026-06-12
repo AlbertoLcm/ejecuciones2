@@ -1,0 +1,40 @@
+name: Compilar Python + Playwright a EXE
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch: # Permite ejecutar el proceso manualmente desde GitHub
+
+jobs:
+  build:
+    runs-on: windows-latest # Obligatorio Windows para generar el .exe
+
+    steps:
+    - name: Descargar el código del repositorio
+      uses: actions/checkout@v4
+
+    - name: Configurar Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Instalar dependencias y PyInstaller
+      run: |
+        python -m pip install --upgrade pip
+        # Instalamos PyInstaller, Playwright y todas las librerías de lectura de PDF/Excel que usa tu script Carga_SAT.py
+        pip install pyinstaller
+        pip install -r requirements.txt
+        
+        # NOTA: NO ejecutamos "playwright install". Al usar channel="chrome", 
+        # evitamos descargar los navegadores internos para que el .exe sea súper ligero.
+
+    - name: Compilar Script con PyInstaller (Soporte Completo Playwright)
+      run: |
+        # --collect-all playwright empaqueta el driver interno de comunicación de Playwright
+        pyinstaller --onefile --collect-all playwright Bot_final.py
+
+    - name: Guardar el ejecutable como Artefacto
+      uses: actions/upload-artifact@v4
+      with:
+        name: programa-playwright-windows
+        path: dist/main.exe

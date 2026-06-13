@@ -253,7 +253,7 @@ def generar_documento_prorroga(datos_oficio: dict, datos_extraidos: dict):
     )
     
     p.add_run("se nos otorgue el termino ")
-    p.add_run(f"{dias_prorroga} días hábiles").bold = True
+    p.add_run("15 días más hábiles").bold = True
     p.add_run(", para estar en posibilidad de atender su requerimiento correctamente.")
 
     p = doc.add_paragraph()

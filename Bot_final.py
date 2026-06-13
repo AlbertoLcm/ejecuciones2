@@ -216,6 +216,13 @@ def generar_documento_prorroga(datos_oficio: dict, datos_extraidos: dict):
 
     p.paragraph_format.space_after = Pt(12)
 
+    p = doc.add_paragraph(nombre_autoridad)
+    p.paragraph_format.space_before = Pt(0)
+    p.paragraph_format.space_after = Pt(0)
+
+    p = doc.add_paragraph()
+    p.add_run("P R E S E N T E").bold = True
+    
     p = doc.add_paragraph()
     p.add_run(
         f"{nombre_apoderado}, en mi carácter de {cargo_apoderado} "
@@ -244,7 +251,7 @@ def generar_documento_prorroga(datos_oficio: dict, datos_extraidos: dict):
         "requerimiento, por lo que, con el único afán de dar respuesta a su petición "
         ", solicito amablemente "
     )
-    p.add_run(f"{nombre_autoridad} ").bold = True
+    
     p.add_run("se nos otorgue el termino ")
     p.add_run(f"{dias_prorroga} días hábiles").bold = True
     p.add_run(", para estar en posibilidad de atender su requerimiento correctamente.")
@@ -257,7 +264,7 @@ def generar_documento_prorroga(datos_oficio: dict, datos_extraidos: dict):
     run.underline = True
 
     doc.add_paragraph()
-    doc.add_paragraph(f"Por lo anteriormente expuesto, solicito a usted {nombre_autoridad}:")
+    doc.add_paragraph(f"Por lo anteriormente expuesto, solicito: ")
 
     p = doc.add_paragraph()
     p.add_run("PRIMERO : ").bold = True
@@ -265,7 +272,7 @@ def generar_documento_prorroga(datos_oficio: dict, datos_extraidos: dict):
 
     p = doc.add_paragraph()
     p.add_run("SEGUNDO : ").bold = True
-    p.add_run(f"Se nos otorgue el termino de {dias_prorroga} días hábiles.")
+    p.add_run(f"Se nos otorgue el termino de 15 días hábiles más.")
 
     doc.add_paragraph()
 
